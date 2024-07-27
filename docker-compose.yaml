@@ -1,0 +1,69 @@
+services:
+  rcss-server:
+    container_name: rcss-server
+    image: rcss:server
+    privileged: true
+    build:
+      context: .
+      args:
+        - USER_NAME=${USER_NAME}
+        - GROUP_NAME=${GROUP_NAME}
+        - UID=${UID}
+        - GID=${GID}
+    environment:
+      - DISPLAY=${DISPLAY}
+      - XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR}
+      #- PULSE_SERVER=unix:/tmp/pulseaudio.socket
+      #- PULSE_COOKIE=/tmp/pulseaudio.cookie
+    volumes:
+       - /tmp/.X11-unix:/tmp/.X11-unix
+       - $HOME/.Xauthority/:/root/.Xauthority
+       - /dev:/dev
+       - ./rcssserver-19.0.0:$HOME/rcssserver-19.0.0
+    devices:
+       - /dev:/dev
+    ipc: host
+    network_mode: host
+    tty: true
+    stdin_open: true
+    user: "${UID}:${GID}"
+    command: /bin/bash
+
+  rcss-server-gpu:
+    container_name: rcss-server-gpu
+    image: rcss:server_gpu
+    privileged: true
+    build:
+      context: .
+      args:
+        - USER_NAME=${USER_NAME}
+        - GROUP_NAME=${GROUP_NAME}
+        - UID=${UID}
+        - GID=${GID}
+    environment:
+      - DISPLAY=${DISPLAY}
+      - XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR}
+      #- PULSE_SERVER=unix:/tmp/pulseaudio.socket
+      #- PULSE_COOKIE=/tmp/pulseaudio.cookie
+    volumes:
+       - /tmp/.X11-unix:/tmp/.X11-unix
+       - $HOME/.Xauthority/:/root/.Xauthority
+       - /dev:/dev
+       - ./rcssserver-19.0.0:$HOME/rcssserver-19.0.0
+    devices:
+       - /dev:/dev
+    ipc: host
+    network_mode: host
+    tty: true
+    stdin_open: true
+    user: "${UID}:${GID}"
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+    command: /bin/bash -c "nvidia-smi"

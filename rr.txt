@@ -1,0 +1,9 @@
+LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH
+export QT_QPA_PLATFORM_PLUGIN_PATH="/usr/lib/x86_64-linux-gnu"
+export LD_LIBRARY_PATH="/usr/lib/x86_64-linux-gnu/:$LD_LIBRARY_PATH"
+
+export QT_ASSUME_STDERR_HAS_CONSOLE=1
+export QT_LOGGING_RULES="*.debug=true;qtc.*=false;qt.gui.*=false;qt.widgets.*=false;qt.qpa.*=false;qt.text.*=false;qt.accessibility.*=false;qt.core.filesystemwatcher=false;qt.qml.*=false"
+export QT_MESSAGE_PATTERN="[%{type}] %{appname} (%{file}:%{line}) - %{message}"
+
