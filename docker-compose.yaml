@@ -19,7 +19,6 @@ services:
        - /tmp/.X11-unix:/tmp/.X11-unix
        - $HOME/.Xauthority/:/root/.Xauthority
        - /dev:/dev
-       - ./rcssserver-19.0.0:$HOME/rcssserver-19.0.0
     devices:
        - /dev:/dev
     ipc: host
@@ -31,7 +30,7 @@ services:
 
   rcss-server-gpu:
     container_name: rcss-server-gpu
-    image: rcss:server_gpu
+    image: rcss:gpu
     privileged: true
     build:
       context: .
@@ -49,7 +48,6 @@ services:
        - /tmp/.X11-unix:/tmp/.X11-unix
        - $HOME/.Xauthority/:/root/.Xauthority
        - /dev:/dev
-       - ./rcssserver-19.0.0:$HOME/rcssserver-19.0.0
     devices:
        - /dev:/dev
     ipc: host

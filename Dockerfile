@@ -1,5 +1,5 @@
-#FROM ubuntu:22.04
-FROM nvidia/cuda:12.1.0-runtime-ubuntu22.04
+FROM ubuntu:22.04
+#FROM nvidia/cuda:12.1.0-runtime-ubuntu22.04
 SHELL ["/bin/bash", "-c"]
 
 # Timezone, Launguage設定
@@ -42,11 +42,10 @@ RUN echo "PS1='\[\033[44;37m\]Docker\[\033[0m\]@\[\033[32m\]\u\[\033[0m\]:\[\033
 
 #installrobocupsoccer server
 RUN mkdir rcss
-COPY rcssserver-19.0.0 ./rcssserver-19.0.0
-RUN cd rcssserver-19.0.0 ; sudo ./configure ; sudo make ; sudo make install
+RUN git clone https://github.com/rcsoccersim/rcssserver.git ;\
+    cd rcssserver ;./bootstrap ;sudo ./configure ; sudo make ; sudo make install
 
 #install robocupsoccer monitor
-COPY rcssmonitor-19.0.0 ./rcssmonitor-19.0.0
 RUN sudo apt-get update ; sudo apt-get install -y clang qtcreator \
     libfontconfig1-dev libaudio-dev libxt-dev libglib2.0-dev libxi-dev libxrender-dev 
         
@@ -54,13 +53,14 @@ RUN git clone https://github.com/rcsoccersim/rcssmonitor.git &&\
     sudo apt-get update && sudo apt install -y qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools qtcreator qtmultimedia5-dev libqt5multimediawidgets5 libqt5multimedia5-plugins &&\
     sudo apt-get install -y `apt-cache search 5-examples | grep qt | grep example | awk '{print $1 }' | xargs` `apt-cache search 5-doc | grep "^qt" | awk '{print $1}' | xargs` &&\
     cd rcssmonitor/ ; ./bootstrap ; ./configure ; make &&\
-    cd rcssmonitor-19.0.0 &&\
-    sudo ./configure ; sudo make ; sudo make install 
+    sudo make install 
 
 #tempに実行ファイル追加
 COPY entry_point.sh /tmp/entry_point.sh
 RUN sudo chmod +x /tmp/entry_point.sh ;\
-    sudo chmod -R 777 /home/${USER_NAME}/rcss 
+    sudo chmod -R 777 /home/${USER_NAME}/rcss ;\
+    echo 'LD_LIBRARY_PATH="YOUR_INSTALLATION_DIR/lib:$LD_LIBRARY_PATH"' >> /home/${USER_NAME}/.bashrc ;\
+    echo "export LD_LIBRARY_PATH" >> /home/${USER_NAME}/.bashrc
 WORKDIR /home/${USER_NAME}/rcss
 ENTRYPOINT ["/tmp/entry_point.sh"]
 #setup.shで毎回source /opt/ros/humble/setup.bashしている
