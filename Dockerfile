@@ -59,7 +59,7 @@ RUN git clone https://github.com/rcsoccersim/rcssmonitor.git &&\
 COPY entry_point.sh /tmp/entry_point.sh
 RUN sudo chmod +x /tmp/entry_point.sh ;\
     sudo chmod -R 777 /home/${USER_NAME}/rcss ;\
-    echo 'LD_LIBRARY_PATH="YOUR_INSTALLATION_DIR/lib:$LD_LIBRARY_PATH"' >> /home/${USER_NAME}/.bashrc ;\
+    echo 'LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"' >> /home/${USER_NAME}/.bashrc ;\
     echo "export LD_LIBRARY_PATH" >> /home/${USER_NAME}/.bashrc
 WORKDIR /home/${USER_NAME}/rcss
 ENTRYPOINT ["/tmp/entry_point.sh"]
