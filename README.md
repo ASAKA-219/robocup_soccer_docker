@@ -40,4 +40,4 @@ ls
 ```
 で `202307090739-Hermes2D_2-vs-R3CESBU_6.rcg` がホームディレクトリにあるか確認しましょう。
 あればサッカーシミュレーターで写真のように操作してください。
-![demo](https://github.com/ASAKA-219/robocup_soccer_docker/gif/Peek 2024-09-25 23-41.gif)
+![demo](https://github.com/ASAKA-219/robocup_soccer_docker/blob/master/gif/Peek%202024-09-25%2023-41.gif)
