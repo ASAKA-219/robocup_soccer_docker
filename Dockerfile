@@ -56,6 +56,7 @@ RUN git clone https://github.com/rcsoccersim/rcssmonitor.git &&\
     sudo make install 
 
 #tempに実行ファイル追加
+COPY 202307090739-Hermes2D_2-vs-R3CESBU_6.rcg /home/${USER_NAME}/202307090739-Hermes2D_2-vs-R3CESBU_6.rcg
 COPY entry_point.sh /tmp/entry_point.sh
 RUN sudo chmod +x /tmp/entry_point.sh ;\
     sudo chmod -R 777 /home/${USER_NAME}/rcss ;\

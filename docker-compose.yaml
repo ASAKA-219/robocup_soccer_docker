@@ -19,6 +19,7 @@ services:
        - /tmp/.X11-unix:/tmp/.X11-unix
        - $HOME/.Xauthority/:/root/.Xauthority
        - /dev:/dev
+       #- ./202307090739-Hermes2D_2-vs-R3CESBU_6.rcg.gz:/home/${USER_NAME}/202307090739-Hermes2D_2-vs-R3CESBU_6.rcg.gz
     devices:
        - /dev:/dev
     ipc: host
